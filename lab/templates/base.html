@@ -1,17 +1,16 @@
-{% extends "headers.html" %} {% block base %}
-
+{% extends "headers.html" %} {% block base %} {%load static %}
 <div id="tabSection">
   <div class="col s12">
     <ul class="tabs z-depth-2">
       <li class="tab col s2">
-        <a href="#lendings">Prestamo</a>
+        <a href="#lendings" class="active">Prestamo</a>
       </li>
       <li class="tab col s2">
         <a href="#devolutions">Devoluciones</a>
       </li>
       <li class="tab col s2"><a href="#export">Exportar</a></li>
       <li class="tab col s2"><a href="#import">Importar</a></li>
-      <li class="tab col s2"><a href="#audit" class="active">Auditoria</a></li>
+      <li class="tab col s2"><a href="#audit">Auditoria</a></li>
       <li class="tab col s2"><a href="#reports">Reportes</a></li>
     </ul>
   </div>
@@ -38,19 +37,34 @@
       <div class="row">
         <div class="input-field col s4">
           <i class="material-icons prefix">tag</i>
-          <input id="accountNumber" type="number" class="validate" />
+          <input
+            id="accountNumber"
+            type="number"
+            class="validate"
+            oninput="autofillStudent(this.value)"
+          />
           <label for="accountNumber">Numero de cuenta</label>
         </div>
         <div class="input-field col s4">
           <i class="material-icons prefix">badge</i>
-          <input id="studentName" type="text" class="validate" disabled />
-          <label for="studentName">Nombre</label>
+          <input
+            id="studentName"
+            type="text"
+            class="validate"
+            disabled
+            placeholder="Nombre"
+          />
         </div>
 
         <div class="input-field col s4">
           <i class="material-icons prefix">school</i>
-          <input id="career" type="text" class="validate" disabled />
-          <label for="career">Carrera</label>
+          <input
+            id="career"
+            type="text"
+            class="validate"
+            disabled
+            placeholder="Carrera"
+          />
         </div>
       </div>
 
@@ -64,7 +78,13 @@
       <div class="row">
         <div class="input-field col s3">
           <i class="material-icons prefix">tag</i>
-          <input id="patrimonialNumber" type="number" class="validate" />
+          <input
+            id="patrimonialNumber"
+            type="number"
+            class="validate"
+            oninput="autofillItem(this.value)"
+          />
+
           <label for="patrimonialNumber">Patrimonial</label>
         </div>
 
@@ -75,6 +95,7 @@
             type="text"
             class="validate"
             disabled
+            placeholder="Nombre"
           />
           <label for="itemName">Nombre</label>
         </div>
@@ -87,6 +108,7 @@
             class="validate"
             disabled
           />
+          <label for="itemName">Marca</label>
         </div>
 
         <div class="input-field col s3">
@@ -97,6 +119,7 @@
             class="validate"
             disabled
           />
+          <label for="itemName">Modelo</label>
         </div>
       </div>
       <div class="row">
@@ -106,7 +129,9 @@
           >
         </div>
         <div class="col s6 text-center">
-          <a class="btn-floating btn-large waves-effect waves-light red"
+          <a
+            onclick="clearFields()"
+            class="btn-floating btn-large waves-effect waves-light red"
             ><i class="material-icons">clear</i></a
           >
         </div>
@@ -278,65 +303,35 @@
       <div class="row">
         <div class="input-field col s4">
           <i class="material-icons prefix">search</i>
-          <input id="auditField" type="text" class="validate" />
+          <input
+            id="auditField"
+            type="text"
+            class="validate"
+            oninput="updateAuditTable(this.value)"
+          />
           <label for="auditField">Numero, marca o modelo</label>
         </div>
       </div>
 
       <div class="row tableWrapper">
         <table class="striped" id="auditTable">
-         
+          <thead>
             <tr>
               <th>Numero patrimonial</th>
               <th>Nombre</th>
               <th>Marca</th>
               <th>Modelo</th>
             </tr>
-          
+          </thead>
 
-        
+          <tbody id="tableBody">
             <tr>
               <td>123</td>
               <td>Multimetro</td>
               <td>Flux</td>
               <td>HHASD</td>
-              
             </tr>
-            <tr>
-              <td>123</td>
-              <td>Multimetro</td>
-              <td>Flux</td>
-              <td>HHASD</td>
-              
-            </tr>
-            <tr>
-              <td>123</td>
-              <td>Multimetro</td>
-              <td>Flux</td>
-              <td>HHASD</td>
-              
-            </tr>
-            <tr>
-              <td>123</td>
-              <td>Multimetro</td>
-              <td>Flux</td>
-              <td>HHASD</td>
-              
-            </tr>
-            <tr>
-              <td>123</td>
-              <td>Multimetro</td>
-              <td>Flux</td>
-              <td>HHASD</td>
-              
-            </tr>
-            <tr>
-              <td>123</td>
-              <td>Multimetro</td>
-              <td>Flux</td>
-              <td>HHASD</td>
-              
-            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -355,11 +350,17 @@
   </div>
 
   <script>
+    /*Initializing js components and global django variables*/
     $(document).ready(function () {
       $(".tabs").tabs();
       $(".tooltipped").tooltip({ position: "right" });
     });
+
+    let students = {{students | safe}};
+    let items = {{items | safe}};
+    let lendings = {{lendings | safe}};
   </script>
 
-  {% endblock base %}
+  <script src="{% static 'js/app.js'%}"></script>
 </div>
+{% endblock base %}
