@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+body {
+  margin: 0px;
+  font-family: "Montserrat";
+  background-image: url("../img/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#app {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 3fr 1fr;
+      grid-template-columns: 3fr 1fr;
+  -ms-grid-rows: 7fr 1fr;
+      grid-template-rows: 7fr 1fr;
+  width: 100vw;
+  height: 100vh;
+  padding: 2%;
+  justify-items: center;
+      grid-template-areas: "tabSection chartSection" ".          .";
+}
+
+#tabSection {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: tabSection;
+  width: 100% !important;
+  min-width: 100% !important;
+  height: 100%;
+  min-height: 100% !important;
+}
+
+#tabWrapper {
+  background-color: white;
+  height: 100%;
+  padding: 3%;
+}
+
+#chartSection {
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+  grid-area: chartSection;
+}
+
+.tabs li {
+  font-weight: bolder;
+}
+
+#tabTitle {
+  text-align: center;
+}
+
+.tableWrapper {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 250px;
+}
+
+#auditTable {
+  width: 100%;
+  height: auto;
+  table-layout: fixed;
+  overflow: scroll;
+}
+
+.roundIcon {
+  border: 4px solid rgba(0, 0, 0, 0.3);
+  padding: 2%;
+  border-radius: 100%;
+}
+
+.label {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  vertical-align: middle;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 10px;
+}
+
+.input-field .prefix {
+  font-size: 1.8em !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/*Custom tab color*/
+.tabs .tab a {
+  color: #000 !important;
+}
+
+/*Black color to the text*/
+.tabs .tab a:hover {
+  background-color: #eee !important;
+  color: #000 !important;
+}
+
+/*Text color on hover*/
+.tabs .tab a.active {
+  color: white !important;
+  background-color: #43a047 !important;
+}
+
+/*Background and text color when a tab is active*/
+.tabs .indicator {
+  background-color: #2e7d32 !important;
+}
+
+/*Color of underline*/
+/*# sourceMappingURL=baseStyles.css.map */

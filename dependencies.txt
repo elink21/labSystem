@@ -1,0 +1,5 @@
+* Materialize CSS
+* Google icons 
+* Google fonts
+* Jquery 3
+* Chart JS

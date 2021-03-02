@@ -1,0 +1,365 @@
+{% extends "headers.html" %} {% block base %}
+
+<div id="tabSection">
+  <div class="col s12">
+    <ul class="tabs z-depth-2">
+      <li class="tab col s2">
+        <a href="#lendings">Prestamo</a>
+      </li>
+      <li class="tab col s2">
+        <a href="#devolutions">Devoluciones</a>
+      </li>
+      <li class="tab col s2"><a href="#export">Exportar</a></li>
+      <li class="tab col s2"><a href="#import">Importar</a></li>
+      <li class="tab col s2"><a href="#audit" class="active">Auditoria</a></li>
+      <li class="tab col s2"><a href="#reports">Reportes</a></li>
+    </ul>
+  </div>
+
+  <div class="z-depth-2" id="tabWrapper">
+    <div id="lendings" class="tabDiv col s12">
+      <div id="tabTitle">
+        <i
+          class="material-icons roundIcon tooltipped"
+          data-tooltip="🛈 Solo es necesario escanear credencial y equipo"
+          >book</i
+        >
+        <br />
+        <h5>Prestamos</h5>
+      </div>
+
+      <div class="row">
+        <div class="label">
+          <i class="material-icons small">account_circle</i>
+          <strong>Datos del alumno: </strong>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s4">
+          <i class="material-icons prefix">tag</i>
+          <input id="accountNumber" type="number" class="validate" />
+          <label for="accountNumber">Numero de cuenta</label>
+        </div>
+        <div class="input-field col s4">
+          <i class="material-icons prefix">badge</i>
+          <input id="studentName" type="text" class="validate" disabled />
+          <label for="studentName">Nombre</label>
+        </div>
+
+        <div class="input-field col s4">
+          <i class="material-icons prefix">school</i>
+          <input id="career" type="text" class="validate" disabled />
+          <label for="career">Carrera</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="label">
+          <i class="material-icons small">memory</i>
+          <strong>Datos del equipo: </strong>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s3">
+          <i class="material-icons prefix">tag</i>
+          <input id="patrimonialNumber" type="number" class="validate" />
+          <label for="patrimonialNumber">Patrimonial</label>
+        </div>
+
+        <div class="input-field col s3">
+          <input
+            placeholder="Nombre"
+            id="itemName"
+            type="text"
+            class="validate"
+            disabled
+          />
+          <label for="itemName">Nombre</label>
+        </div>
+
+        <div class="input-field col s3">
+          <input
+            placeholder="Marca"
+            id="brand"
+            type="text"
+            class="validate"
+            disabled
+          />
+        </div>
+
+        <div class="input-field col s3">
+          <input
+            placeholder="Modelo"
+            id="model"
+            type="text"
+            class="validate"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s6 text-center">
+          <a class="btn-floating btn-large waves-effect waves-light green"
+            ><i class="material-icons">add_task</i></a
+          >
+        </div>
+        <div class="col s6 text-center">
+          <a class="btn-floating btn-large waves-effect waves-light red"
+            ><i class="material-icons">clear</i></a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div id="devolutions" class="tabDiv col s12">
+      <div id="tabTitle">
+        <i
+          class="material-icons roundIcon tooltipped"
+          data-tooltip="🛈 Solo escanear numero de cuenta para ver opciones"
+          >next_plan</i
+        >
+        <br />
+        <h5>Devoluciones</h5>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">tag</i>
+          <input id="accountNumber" type="number" class="validate" />
+          <label for="accountNumber">Numero de cuenta</label>
+        </div>
+      </div>
+    </div>
+
+    <div id="export" class="tabDiv col s12">
+      <div id="tabTitle">
+        <i
+          class="material-icons roundIcon tooltipped"
+          data-tooltip="🛈 Descargar XLS"
+          >sim_card_download</i
+        >
+        <br />
+        <h5>Exportar</h5>
+      </div>
+
+      <br />
+      <br />
+      <br />
+
+      <div class="row text-center">
+        <div class="col s4 optionCard">
+          <i class="material-icons"> person </i>
+          <h6>Estudiantes</h6>
+          <br />
+          <a
+            class="btn-floating btn-large waves-effect waves-light green accent-4"
+            ><i class="material-icons">download</i></a
+          >
+        </div>
+        <div class="col s4 optionCard">
+          <i class="material-icons"> memory </i>
+          <h6>Equipo</h6>
+          <br />
+          <a
+            class="btn-floating btn-large waves-effect waves-light green accent-4"
+            ><i class="material-icons">download</i></a
+          >
+        </div>
+        <div class="col s4 optionCard">
+          <i class="material-icons"> book </i>
+          <h6>Prestamos</h6>
+          <br />
+          <a
+            class="btn-floating btn-large waves-effect waves-light green accent-4"
+            ><i class="material-icons">download</i></a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div id="import" class="tabDiv col s12">
+      <div id="tabTitle">
+        <i
+          class="material-icons roundIcon tooltipped"
+          data-tooltip="🛈 Usar XLS para reescribir la base de datos"
+          >import_export</i
+        >
+        <br />
+        <h5>Importar</h5>
+        <br /><br /><br />
+        <div class="row text-center">
+          <div class="col s4 optionCard">
+            <i class="material-icons"> person </i>
+            <h6>Estudiantes</h6>
+            <br />
+            <form action="#">
+              <div class="file-field input-field">
+                <div class="btn btn-small green accent-4">
+                  <span><i class="material-icons">folder_open</i></span>
+                  <input type="file" accept=".xlsx, .xls, .csv" />
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" />
+                </div>
+              </div>
+              <a
+                onclick="this.closest('form').submit();return false;"
+                class="btn-floating btn-large waves-effect waves-light green accent-3"
+                ><i class="material-icons">send</i></a
+              >
+            </form>
+          </div>
+          <div class="col s4 optionCard">
+            <i class="material-icons"> memory </i>
+            <h6>Equipo</h6>
+            <br />
+
+            <form action="#" class="text-center">
+              <div class="file-field input-field">
+                <div class="btn btn-small green accent-4">
+                  <span><i class="material-icons">folder_open</i></span>
+                  <input type="file" accept=".xlsx, .xls, .csv" />
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" />
+                </div>
+              </div>
+
+              <a
+                onclick="this.closest('form').submit();return false;"
+                class="btn-floating btn-large waves-effect waves-light green accent-3"
+                ><i class="material-icons">send</i></a
+              >
+            </form>
+          </div>
+          <div class="col s4 optionCard">
+            <i
+              class="material-icons tooltiped"
+              data-tooltip="Registrar prestamos"
+            >
+              book
+            </i>
+            <h6>Prestamos</h6>
+            <br />
+            <form action="#">
+              <div class="file-field input-field">
+                <div class="btn btn-small green accent-4">
+                  <span><i class="material-icons">folder_open</i></span>
+                  <input type="file" accept=".xlsx, .xls, .csv" />
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" />
+                </div>
+              </div>
+              <a
+                onclick="this.closest('form').submit();return false;"
+                class="btn-floating btn-large waves-effect waves-light green accent-3"
+                ><i class="material-icons">send</i></a
+              >
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="audit" class="tabDiv col s12">
+      <div id="tabTitle">
+        <i
+          class="material-icons roundIcon tooltipped"
+          data-tooltip="🛈 Auditar equipos"
+          >pageview</i
+        >
+        <br />
+        <h5>Auditoria</h5>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s4">
+          <i class="material-icons prefix">search</i>
+          <input id="auditField" type="text" class="validate" />
+          <label for="auditField">Numero, marca o modelo</label>
+        </div>
+      </div>
+
+      <div class="row tableWrapper">
+        <table class="striped" id="auditTable">
+         
+            <tr>
+              <th>Numero patrimonial</th>
+              <th>Nombre</th>
+              <th>Marca</th>
+              <th>Modelo</th>
+            </tr>
+          
+
+        
+            <tr>
+              <td>123</td>
+              <td>Multimetro</td>
+              <td>Flux</td>
+              <td>HHASD</td>
+              
+            </tr>
+            <tr>
+              <td>123</td>
+              <td>Multimetro</td>
+              <td>Flux</td>
+              <td>HHASD</td>
+              
+            </tr>
+            <tr>
+              <td>123</td>
+              <td>Multimetro</td>
+              <td>Flux</td>
+              <td>HHASD</td>
+              
+            </tr>
+            <tr>
+              <td>123</td>
+              <td>Multimetro</td>
+              <td>Flux</td>
+              <td>HHASD</td>
+              
+            </tr>
+            <tr>
+              <td>123</td>
+              <td>Multimetro</td>
+              <td>Flux</td>
+              <td>HHASD</td>
+              
+            </tr>
+            <tr>
+              <td>123</td>
+              <td>Multimetro</td>
+              <td>Flux</td>
+              <td>HHASD</td>
+              
+            </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="reports" class="tabDiv col s12">
+      <div id="tabTitle">
+        <i
+          class="material-icons roundIcon tooltipped"
+          data-tooltip="🛈 Generar reportes personalizados"
+          >summarize</i
+        >
+        <br />
+        <h5>Reportes</h5>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $(".tabs").tabs();
+      $(".tooltipped").tooltip({ position: "right" });
+    });
+  </script>
+
+  {% endblock base %}
+</div>
