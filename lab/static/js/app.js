@@ -115,7 +115,7 @@ function updatePieChart() {
     };
 
     var myDoughnutChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut',
         data: data,
         options: {
             title: {
