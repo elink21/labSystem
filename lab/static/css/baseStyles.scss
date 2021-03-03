@@ -1,24 +1,37 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
 
+@font-face {
+  font-family: "Digital";
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/digital-7.ttf");
+}
+
 body {
   margin: 0px;
   font-family: "Montserrat";
-  background-image: url("../img/background.jpg");
+  /*background-image: url("../img/background.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover;*/
+}
+
+#logo {
+  height: 150px;
+  width: 100%;
+  background-image: url("../img/customLogo.png");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 #app {
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-rows: 7fr 1fr;
+  grid-template-columns: 5fr 3fr;
+  grid-template-rows: 1fr;
   width: 100vw;
   height: 100vh;
   padding: 2%;
   justify-items: center;
-  grid-template-areas:
-    "tabSection chartSection"
-    ".          .";
+  grid-template-areas: "tabSection chartSection";
 }
 
 #tabSection {
@@ -28,10 +41,15 @@ body {
   height: 100%;
   min-height: 100% !important;
 }
-#tabWrapper {
+
+.tabDiv {
   background-color: white;
-  height: 100%;
-  padding: 3%;
+  padding: 2%;
+  height: 100% !important;
+}
+
+#tabWrapper {
+  height: 90%;
 }
 
 #chartSection {
@@ -102,3 +120,27 @@ body {
 .tabs .indicator {
   background-color: rgba(46, 125, 50, 1) !important;
 } /*Color of underline*/
+
+#chart {
+  width: 450px;
+  padding-bottom: 15px;
+  background-color: white;
+}
+
+#clock {
+  font-family: "Digital";
+
+  text-align: center;
+  padding: 10px;
+  background-color: white;
+
+  i {
+    font-size: 40px !important;
+  }
+
+  p {
+    font-size: 40px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+}

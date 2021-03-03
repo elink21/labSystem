@@ -1,5 +1,12 @@
 console.table(items);
 updateAuditTable('');
+updatePieChart();
+
+clock = setInterval(function() {
+    var d= new Date();
+    let c=document.querySelector('#clockText');
+    c.innerHTML= d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+},100);
 
 function updateAuditTable(toSearch) {
 
@@ -90,4 +97,33 @@ function autofillItem(patrimonialNumber) {
         brandInput.value = '';
         modelInput.value = '';
     }
+}
+
+function updatePieChart() {
+    var ctx = document.querySelector('#chart').getContext('2d');
+    data = {
+        datasets: [{
+            data: [10, 20, 30]
+        }],
+    
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'Red',
+            'Yellow',
+            'Blue'
+        ]
+    };
+
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: {
+            title: {
+                display: true,
+                text: 'Usuarios por carrera',
+                fontSize:12,
+                fontStyle:'bold',
+            }
+        }
+    });
 }

@@ -17,6 +17,12 @@ def startConnection():
     return c
 
 
+def getList(table:str)->list:
+    connection = startConnection()
+    l= getQuery(connection.cursor(),table)
+    return list(l)
+
+
 def getStudents() -> list:
     connection = startConnection()
     students = getQuery(connection.cursor(), "students")
@@ -79,4 +85,3 @@ def getLendings() -> list:
 
     return lendingsDicts
 
-print(getLendings())

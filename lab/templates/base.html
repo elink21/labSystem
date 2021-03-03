@@ -179,6 +179,7 @@
           <h6>Estudiantes</h6>
           <br />
           <a
+            href="xlsStudents"
             class="btn-floating btn-large waves-effect waves-light green accent-4"
             ><i class="material-icons">download</i></a
           >
@@ -188,6 +189,7 @@
           <h6>Equipo</h6>
           <br />
           <a
+            href="xlsItems"
             class="btn-floating btn-large waves-effect waves-light green accent-4"
             ><i class="material-icons">download</i></a
           >
@@ -197,6 +199,7 @@
           <h6>Prestamos</h6>
           <br />
           <a
+            href="xlsLendings"
             class="btn-floating btn-large waves-effect waves-light green accent-4"
             ><i class="material-icons">download</i></a
           >
@@ -360,7 +363,21 @@
     let items = {{items | safe}};
     let lendings = {{lendings | safe}};
   </script>
-
-  <script src="{% static 'js/app.js'%}"></script>
 </div>
+
+<div id="chartSection">
+
+  <div id="logo" class="z-depth-1"></div>  <br>
+  <canvas id="chart" class="z-depth-2"> </canvas>
+
+  <br><br>
+  <div id="clock" class="z-depth-2">
+    <i class="material-icons medium">schedule</i>
+    <p id="clockText">11:39 pm</p>
+  </div>
+
+  
+</div>
+
+<script src="{% static 'js/app.js'%}"></script>
 {% endblock base %}
