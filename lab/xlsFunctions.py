@@ -9,7 +9,7 @@ def getList(table: str) -> bytes:
 
     headers = {
         'students': ['id', 'Nombre', 'Numero de cuenta', 'Carrera'],
-        'historiallendings': ['id', 'Fecha de prestamo', 'Numero de cuenta', 'Numero Patrimonial'],
+        'historiallendings': ['id', 'Fecha de devolucion','Fecha de prestamo', 'Numero de cuenta', 'Numero Patrimonial'],
         'items': ['id', 'Numero patrimonial', 'Nombre', 'Marca', 'Modelo', 'Stock'],
     }
 
@@ -24,7 +24,7 @@ def getList(table: str) -> bytes:
 
     for i in range(len(data)):
         for j in range(len(data[i])):
-            worksheet.write(i+1, j, data[i][j])
+            worksheet.write(i+1, j, str(data[i][j]))
     workbook.close()
     output.seek(0)
     return [output,table]

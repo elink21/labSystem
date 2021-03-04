@@ -1,12 +1,12 @@
 {% extends "headers.html" %} {% block base %} {%load static %}
 <div id="tabSection">
-  <div class="col s12">
+  <div class="col s12 tabsMenu">
     <ul class="tabs z-depth-2">
       <li class="tab col s2">
         <a href="#lendings" class="active">Prestamo</a>
       </li>
       <li class="tab col s2">
-        <a href="#devolutions">Devoluciones</a>
+        <a href="#devolutions" >Devoluciones</a>
       </li>
       <li class="tab col s2"><a href="#export">Exportar</a></li>
       <li class="tab col s2"><a href="#import">Importar</a></li>
@@ -124,7 +124,9 @@
       </div>
       <div class="row">
         <div class="col s6 text-center">
-          <a class="btn-floating btn-large waves-effect waves-light green"
+          <a
+            onclick="createLending()"
+            class="btn-floating btn-large waves-effect waves-light green"
             ><i class="material-icons">add_task</i></a
           >
         </div>
@@ -150,10 +152,31 @@
       </div>
 
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s6">
           <i class="material-icons prefix">tag</i>
-          <input id="accountNumber" type="number" class="validate" />
-          <label for="accountNumber">Numero de cuenta</label>
+          <input id="accountNumberReturn" type="number" class="validate" oninput="fillActiveLendings()" />
+          <label for="accountNumberReturn">🔎 Filtrar por numero de cuenta</label>
+        </div>
+        <div class="col s1"></div>
+          <a onclick="returnAllLendings()" class="waves-effect waves-light btn-small red" style="margin-top:25px;">⚠ Devolver todos los prestamos</a>
+     
+      </div>
+
+      <div id="lendingsContainer">
+        <div class="lendingCard z-depth-2">
+          <div>
+            <i class="material-icons rounded">person</i> <br />
+            <small>Elias Edgardo Segundo Antonio</small>
+          </div>
+          <br />
+          <div>
+            <i class="material-icons rounded">memory</i> <br />
+            <small>Multimetro</small>
+          </div>
+
+          <a class="waves-effect waves-light btn-small green darken-4">
+            Devolver
+          </a>
         </div>
       </div>
     </div>
@@ -362,21 +385,20 @@
     let students = {{students | safe}};
     let items = {{items | safe}};
     let lendings = {{lendings | safe}};
+    let historialLendings = {{historialLendings | safe}};
   </script>
 </div>
 
 <div id="chartSection">
-
-  <div id="logo" class="z-depth-1"></div>  <br>
+  <div id="logo" class="z-depth-1"></div>
+  <br />
   <canvas id="chart" class="z-depth-2"> </canvas>
 
-  <br><br>
+  <br /><br />
   <div id="clock" class="z-depth-2">
     <i class="material-icons medium">schedule</i>
     <p id="clockText">11:39 pm</p>
   </div>
-
-  
 </div>
 
 <script src="{% static 'js/app.js'%}"></script>

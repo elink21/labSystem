@@ -114,12 +114,12 @@ body {
 
 .tabs .tab a.active {
   color: white !important;
-  background-color:#2c5234 !important;
+  background-color: #2c5234 !important;
 } /*Background and text color when a tab is active*/
 
 .tabs .indicator {
-  background-color:#9c8412!important;
-  height:4px !important;
+  background-color: #9c8412 !important;
+  height: 4px !important;
 } /*Color of underline*/
 
 #chart {
@@ -134,7 +134,7 @@ body {
   text-align: center;
   padding: 10px;
   background-color: white;
-  color:rgba(0,0,0,.6);
+  color: rgba(0, 0, 0, 0.6);
 
   i {
     font-size: 40px !important;
@@ -144,5 +144,44 @@ body {
     font-size: 40px;
     margin-top: 0px;
     margin-bottom: 0px;
+  }
+}
+
+/*Overloading toast position*/
+#toast-container {
+  top: auto !important;
+  right: auto !important;
+  bottom: 14%;
+  left: 22%;
+}
+
+
+#lendingsContainer{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  align-items: center;
+  gap:15px;
+  height:290px;
+  padding:2%;
+  justify-items:center;
+  overflow-y: scroll;
+
+}
+
+.lendingCard
+{
+  text-align: center;
+  padding:5%;
+  width:100%;
+  a{
+    margin-top: 5px;
+  }
+  .rounded{
+    border: 1px solid #ccc;
+    border-radius: 100%;
+    padding:5px;
+  }
+  small{
+    font-weight: 900;
   }
 }

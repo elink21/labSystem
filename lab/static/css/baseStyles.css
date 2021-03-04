@@ -155,4 +155,47 @@ body {
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
+/*Overloading toast position*/
+#toast-container {
+  top: auto !important;
+  right: auto !important;
+  bottom: 14%;
+  left: 22%;
+}
+
+#lendingsContainer {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(180px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 15px;
+  height: 290px;
+  padding: 2%;
+  justify-items: center;
+  overflow-y: scroll;
+}
+
+.lendingCard {
+  text-align: center;
+  padding: 5%;
+  width: 100%;
+}
+
+.lendingCard a {
+  margin-top: 5px;
+}
+
+.lendingCard .rounded {
+  border: 1px solid #ccc;
+  border-radius: 100%;
+  padding: 5px;
+}
+
+.lendingCard small {
+  font-weight: 900;
+}
 /*# sourceMappingURL=baseStyles.css.map */

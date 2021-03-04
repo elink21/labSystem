@@ -15,22 +15,19 @@ CREATE TABLE `items` (
 
 CREATE TABLE `lendings` (
  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
- `lendingDate` date NOT NULL,
+ `lendingDate` datetime NOT NULL,
  `accountNumber` int(20) COLLATE utf8mb4_unicode_ci NOT NULL,
  `patrimonialNumber` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
- PRIMARY KEY (`id`),
- UNIQUE KEY `lendings_patrimonialnumber_unique` (`patrimonialNumber`)
+ PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `historialLendings` (
  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
- `lendingDate` date NOT NULL,
- `returnDate` date NOT NULL,
+ `lendingDate` datetime NOT NULL,
+ `returnDate` datetime NOT NULL,
  `accountNumber` int(20) COLLATE utf8mb4_unicode_ci NOT NULL,
  `patrimonialNumber` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
- PRIMARY KEY (`id`),
- UNIQUE KEY `lendings_patrimonialnumber_unique` (`patrimonialNumber`)
-);
+ PRIMARY KEY (`id`));
 
 
 CREATE TABLE `students` (
