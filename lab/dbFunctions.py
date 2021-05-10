@@ -25,10 +25,11 @@ def removeAllLendings():
 
     cursor.execute(f'select * from lendings')
 
-    activeLendings= cursor.fetchall()
+    activeLendings = cursor.fetchall()
 
     for lending in activeLendings:
-        removeByField('lendings','id',lending[0]) 
+        removeByField('lendings', 'id', lending[0])
+
 
 def removeByField(table: str, field: str, value):
 
@@ -41,7 +42,7 @@ def removeByField(table: str, field: str, value):
     print(res)
     returnDate = datetime.datetime.fromtimestamp(
         time.time()).strftime('%Y-%m-%d %H:%M:%S')
-    statement =f"insert into historiallendings(returnDate,lendingDate,accountNumber,patrimonialNumber) values('{returnDate}','{res[1]}',{res[2]},{res[3]})"
+    statement = f"insert into historiallendings(returnDate,lendingDate,accountNumber,patrimonialNumber) values('{returnDate}','{res[1]}',{res[2]},{res[3]})"
     print(statement)
     print("*"*10)
     cursor.execute(statement)
@@ -134,7 +135,7 @@ def getHistorialLendings() -> list:
     for lending in lendings:
         newLending = {}
         newLending['id'] = lending[0]
-        newLending['returnDate']= str(lending[2])
+        newLending['returnDate'] = str(lending[2])
         newLending['lendingDate'] = str(lending[1])
         newLending['accountNumber'] = lending[3]
         newLending['patrimonialNumber'] = lending[4]
@@ -142,6 +143,7 @@ def getHistorialLendings() -> list:
         lendingsDicts.append(newLending)
 
     return lendingsDicts
+
 
 def insert(table: str, fields: list, values: list) -> bool:
     # Generating sql query from params
@@ -165,3 +167,23 @@ def insert(table: str, fields: list, values: list) -> bool:
     connection.commit()
     connection.close()
     return True
+
+
+def newStudent(student):
+    allStudents = getStudents()
+    # Checking for duplicates
+    for x in allStudents:
+        if(x['accountNumber'] == student['accountNumber']):
+            return
+    insert('students', ['name', 'accountNumber', 'career'],
+           [student['name'], student['accountNumber'], student['career']])
+
+
+def newItem(item):
+    allItems = getItems()
+    # Duplicates
+    for x in allItems:
+        if(x['patrimonialNumber'] == str(item['patrimonialNumber'])):
+            return
+    insert('items', ['patrimonialNumber', 'name', 'brand', 'model', 'stock'],
+           [item['patrimonialNumber'], item['name'], item['brand'], item['model'], item['stock']])

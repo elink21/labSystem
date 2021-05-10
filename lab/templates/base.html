@@ -6,7 +6,7 @@
         <a href="#lendings" class="active">Prestamo</a>
       </li>
       <li class="tab col s2">
-        <a href="#devolutions" >Devoluciones</a>
+        <a href="#devolutions">Devoluciones</a>
       </li>
       <li class="tab col s2"><a href="#export">Exportar</a></li>
       <li class="tab col s2"><a href="#import">Importar</a></li>
@@ -154,12 +154,23 @@
       <div class="row">
         <div class="input-field col s6">
           <i class="material-icons prefix">tag</i>
-          <input id="accountNumberReturn" type="number" class="validate" oninput="fillActiveLendings()" />
-          <label for="accountNumberReturn">🔎 Filtrar por numero de cuenta</label>
+          <input
+            id="accountNumberReturn"
+            type="number"
+            class="validate"
+            oninput="fillActiveLendings()"
+          />
+          <label for="accountNumberReturn"
+            >🔎 Filtrar por numero de cuenta</label
+          >
         </div>
         <div class="col s1"></div>
-          <a onclick="returnAllLendings()" class="waves-effect waves-light btn-small red" style="margin-top:25px;">⚠ Devolver todos los prestamos</a>
-     
+        <a
+          onclick="returnAllLendings()"
+          class="waves-effect waves-light btn-small red"
+          style="margin-top: 25px"
+          >⚠ Devolver todos los prestamos</a
+        >
       </div>
 
       <div id="lendingsContainer">
@@ -245,11 +256,20 @@
             <i class="material-icons"> person </i>
             <h6>Estudiantes</h6>
             <br />
-            <form action="#">
+            <form
+              action="importStudents"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
               <div class="file-field input-field">
                 <div class="btn btn-small lime darken-3">
                   <span><i class="material-icons">folder_open</i></span>
-                  <input type="file" accept=".xlsx, .xls, .csv" />
+                  <input
+                    name="studentsXLS"
+                    type="file"
+                    accept=".xlsx, .xls, .csv"
+                  />
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text" />
@@ -267,11 +287,20 @@
             <h6>Equipo</h6>
             <br />
 
-            <form action="#" class="text-center">
+            <form
+              action="importItems"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
               <div class="file-field input-field">
                 <div class="btn btn-small lime darken-3">
                   <span><i class="material-icons">folder_open</i></span>
-                  <input type="file" accept=".xlsx, .xls, .csv" />
+                  <input
+                    name="itemsXLS"
+                    type="file"
+                    accept=".xlsx, .xls, .csv"
+                  />
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text" />
@@ -371,6 +400,36 @@
         >
         <br />
         <h5>Reportes</h5>
+
+        <h6>Filtrar por carrera</h6>
+
+        <div class="input-field col s12">
+          <select>
+            <option value="{{career}}" disabled selected>
+              Choose your option
+            </option>
+            {% for career in careers %}
+
+            <option value="">{{career}}</option>
+            {% endfor %}
+          </select>
+          <label>Materialize Select</label>
+        </div>
+        <br />
+
+        <div id="dateRangeReport">
+          <h6>Generar desde 📅</h6>
+          <h6>Hasta 📆</h6>
+
+          <input placeholder="Fecha inicial" type="text" class="datepicker" />
+
+          <input placeholder="Fecha inicial" type="text" class="datepicker" />
+        </div>
+        <br>
+
+        <a class="waves-effect waves-light btn" id="generateReport"
+          ><i class="material-icons left">description</i>Generar reporte</a
+        >
       </div>
     </div>
   </div>
@@ -380,6 +439,14 @@
     $(document).ready(function () {
       $(".tabs").tabs();
       $(".tooltipped").tooltip({ position: "right" });
+      $('select').formSelect();
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.datepicker');
+      var instances = M.Datepicker.init(elems, {});
     });
 
     let students = {{students | safe}};

@@ -8,9 +8,13 @@ def getList(table: str) -> bytes:
     data = db.getList(table)
 
     headers = {
-        'students': ['id', 'Nombre', 'Numero de cuenta', 'Carrera'],
-        'historiallendings': ['id', 'Fecha de devolucion','Fecha de prestamo', 'Numero de cuenta', 'Numero Patrimonial'],
-        'items': ['id', 'Numero patrimonial', 'Nombre', 'Marca', 'Modelo', 'Stock'],
+        'students':
+            ['id', 'name', 'accountNumber', 'career'],
+        'historiallendings':
+            ['id', 'lendingDate', 'returnDate',
+                'accountNumber', 'patrimonialNumber'],
+        'items':
+            ['id', 'patrimonialNumber', 'name', 'brand', 'model', 'stock'],
     }
 
     output = io.BytesIO()
@@ -27,4 +31,4 @@ def getList(table: str) -> bytes:
             worksheet.write(i+1, j, str(data[i][j]))
     workbook.close()
     output.seek(0)
-    return [output,table]
+    return [output, table]
