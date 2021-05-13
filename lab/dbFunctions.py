@@ -187,3 +187,20 @@ def newItem(item):
             return
     insert('items', ['patrimonialNumber', 'name', 'brand', 'model', 'stock'],
            [item['patrimonialNumber'], item['name'], item['brand'], item['model'], item['stock']])
+
+
+def queryForReport(initialDate, endDate, career):
+    query = ""
+    if(career != 'all'):
+        query = f'select lendingDate,returnDate,students.name,items.name from historiallendings join students on students.accountNumber join items on historiallendings.patrimonialNumber where lendingDate>"{initialDate}" and lendingDate<"{endDate}" and students.career="{career}"'
+    else:
+        query = f'select lendingDate,returnDate,students.name,items.name from historiallendings join students on students.accountNumber join items on historiallendings.patrimonialNumber where lendingDate>"{initialDate}" and lendingDate<"{endDate}"'
+
+    connection = startConnection()
+    cursor = connection.cursor()
+    cursor.execute(query)
+    res = cursor.fetchall()
+    connection.close()
+    for row in res:
+        print(row[0])
+    return res

@@ -10,30 +10,25 @@ function createLending() {
     let accountNumber = +document.querySelector('#accountNumber').value;
     let patrimonialNumber = document.querySelector('#patrimonialNumber').value;
 
-    let accountExists=false;
-    let patrimonialExists=false;
+    let accountExists = false;
+    let patrimonialExists = false;
 
     /*Checking if those are valid values */
-    for(let student of students)
-    {
-        if(student['accountNumber']==accountNumber)
-        {
-            accountExists=true;
+    for (let student of students) {
+        if (student['accountNumber'] == accountNumber) {
+            accountExists = true;
             break;
         }
     }
 
-    for(let item of items)
-    {
-        if(item['patrimonialNumber']==patrimonialNumber)
-        {
-            patrimonialExists=true;
+    for (let item of items) {
+        if (item['patrimonialNumber'] == patrimonialNumber) {
+            patrimonialExists = true;
             break;
         }
     }
 
-    if(accountExists==false || patrimonialExists==false)
-    {
+    if (accountExists == false || patrimonialExists == false) {
         M.toast({ html: '❌ Equipo o usuario no existe', classes: 'rounded' });
         return -1;
     }
@@ -58,14 +53,34 @@ function createLending() {
         },
         success: function (newLendings) {
             M.toast({ html: '✅ Prestamo exitoso', classes: 'rounded' });
-            lendings= newLendings;
+            lendings = newLendings;
             fillActiveLendings();
         },
     });
 }
 
-function returnLending(id)
-{
+function generateReport() {
+    initialRange = document.querySelector("#initialRange").value;
+    endRange = document.querySelector("#endRange").value;
+    careersSelected = document.querySelector("#careerSelect").value;
+    console.log(initialRange, endRange, careersSelected);
+
+    $.ajax(
+        {
+            url: 'generateReport',
+            data: {
+                'initialDate': initialRange,
+                'endDate': endRange,
+                'career': careersSelected
+            },
+            success: (pdf) => {
+                alert("done");
+            }
+        }
+    )
+}
+
+function returnLending(id) {
     $.ajax({
         url: 'returnLending',
         data:
@@ -73,21 +88,20 @@ function returnLending(id)
             'id': id,
         },
         success: function (data) {
-            lendings= data['lendings']
-            historialLendings=data['historialLendings'];
+            lendings = data['lendings']
+            historialLendings = data['historialLendings'];
             fillActiveLendings();
             updatePieChart();
         },
     });
 }
 
-function returnAllLendings()
-{
+function returnAllLendings() {
     $.ajax({
         url: 'returnAllLendings',
         success: function (data) {
-            lendings= data['lendings']
-            historialLendings=data['historialLendings'];
+            lendings = data['lendings']
+            historialLendings = data['historialLendings'];
             fillActiveLendings();
             updatePieChart();
         },

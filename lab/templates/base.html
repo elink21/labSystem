@@ -404,14 +404,18 @@
         <h6>Filtrar por carrera</h6>
 
         <div class="input-field col s12">
-          <select>
+          <select id="careerSelect">
             <option value="{{career}}" disabled selected>
               Choose your option
             </option>
+            <option value="all">
+              Todas las carreras
+            </option>
             {% for career in careers %}
 
-            <option value="">{{career}}</option>
+            <option value={{career}}>{{career}}</option>
             {% endfor %}
+            
           </select>
           <label>Materialize Select</label>
         </div>
@@ -421,13 +425,13 @@
           <h6>Generar desde 📅</h6>
           <h6>Hasta 📆</h6>
 
-          <input placeholder="Fecha inicial" type="text" class="datepicker" />
+          <input id="initialRange" placeholder="Fecha inicial" type="text" class="datepicker" />
 
-          <input placeholder="Fecha inicial" type="text" class="datepicker" />
+          <input id="endRange" placeholder="Fecha inicial" type="text" class="datepicker" />
         </div>
         <br>
 
-        <a class="waves-effect waves-light btn" id="generateReport"
+        <a onclick="generateReport()" class="waves-effect waves-light btn" id="generateReport"
           ><i class="material-icons left">description</i>Generar reporte</a
         >
       </div>

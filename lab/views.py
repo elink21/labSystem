@@ -1,10 +1,12 @@
 from django.shortcuts import redirect, render
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from . import dbFunctions as db
 from . import xlsFunctions as xls
 import json
 import time
-import pandas as pd
+
+from datetime import datetime
+
 
 # Create your views here.
 
@@ -127,3 +129,22 @@ def importItems(request):
         }
         db.newItem(item)
     return redirect('/')
+
+
+def generateReport(request):
+    initialDate= request.GET['initialDate']
+    endDate= request.GET['endDate']
+    career= request.GET['career']
+
+    #Turning dates into correct format
+    initialDate = datetime.strptime(initialDate, '%b %d, %Y')
+    initialDate= initialDate.strftime('%Y-%m-%d')
+
+    endDate = datetime.strptime(endDate, '%b %d, %Y')
+    endDate= endDate.strftime('%Y-%m-%d')
+
+    print(initialDate)
+    
+    db.queryForReport(initialDate,endDate,career)
+
+    return JsonResponse({})
