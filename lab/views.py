@@ -7,7 +7,7 @@ from . import xlsFunctions as xls
 from . import pdfFunctions as pdf
 import json
 import time
-
+import pandas as pd
 from datetime import datetime
 
 
@@ -107,7 +107,7 @@ def index(request):
 def importStudents(request):
     studentsFile = request.FILES['studentsXLS']
     xl = pd.ExcelFile(studentsFile)
-    df1 = xl.parse('Sheet1')
+    df1 = xl.parse(xl.sheet_names[0])
     for index, row in df1.iterrows():
         student = {
             'name': row['name'],
@@ -121,7 +121,8 @@ def importStudents(request):
 def importItems(request):
     itemsFile = request.FILES['itemsXLS']
     xl = pd.ExcelFile(itemsFile)
-    df1 = xl.parse('Sheet1')
+
+    df1 = xl.parse(xl.sheet_names[0])
     for i, row in df1.iterrows():
         item = {
             'patrimonialNumber': row['patrimonialNumber'],
@@ -137,7 +138,7 @@ def importItems(request):
 def importLendings(request):
     lendingsFile = request.FILES['lendingsXLS']
     xl = pd.ExcelFile(lendingsFile)
-    df1 = xl.parse('Sheet1')
+    df1 = xl.parse(xl.sheet_names[0])
     for i, row in df1.iterrows():
         lending = {
             'lendingDate': row['lendingDate'],
@@ -146,8 +147,9 @@ def importLendings(request):
             'accountNumber': row['accountNumber'],
             'patrimonialNumber': row['patrimonialNumber'],
         }
+        print(lending)
         # Creating the lending
-        db.insert('lendings',
+        db.insert('historialLendings',
                   ['accountNumber', 'patrimonialNumber',
                       'lendingDate', 'returnDate'],
                   [lending['accountNumber'], lending['patrimonialNumber'],

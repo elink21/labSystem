@@ -135,7 +135,7 @@ function initPieChart() {
         options: {
             title: {
                 display: true,
-                text: 'Usuarios por carrera',
+                text: 'Prestamos por carrera',
                 fontSize: 12,
                 fontStyle: 'bold',
             }

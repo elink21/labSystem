@@ -11,5 +11,6 @@ urlpatterns = [
     path('returnAllLendings', views.returnAllLendings, name='returnAllLendings'),
     path('importStudents', views.importStudents, name="importStudents"),
     path('importItems', views.importItems, name='importItems'),
+    path('importLendings', views.importLendings, name='importLendings'),
     path('generateReport', views.generateReport, name="generateReport"),
 ]
