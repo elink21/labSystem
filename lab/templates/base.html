@@ -348,11 +348,16 @@
             </i>
             <h6>Prestamos</h6>
             <br />
-            <form action="#">
+            <form
+              action="importItems"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
               <div class="file-field input-field">
                 <div class="btn btn-small lime darken-3">
                   <span><i class="material-icons">folder_open</i></span>
-                  <input type="file" accept=".xlsx, .xls, .csv" />
+                  <input name="lendingsXLS" type="file" accept=".xlsx, .xls, .csv" />
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text" />

@@ -134,24 +134,45 @@ def importItems(request):
     return redirect('/')
 
 
-def generateReport(request):
-    initialDate= request.POST['initialDate']
-    endDate= request.POST['endDate']
-    career= request.POST['career']
+def importLendings(request):
+    lendingsFile = request.FILES['lendingsXLS']
+    xl = pd.ExcelFile(lendingsFile)
+    df1 = xl.parse('Sheet1')
+    for i, row in df1.iterrows():
+        lending = {
+            'lendingDate': row['lendingDate'],
+            # change this line after db import
+            'returnDate': row['lendingDate'],
+            'accountNumber': row['accountNumber'],
+            'patrimonialNumber': row['patrimonialNumber'],
+        }
+        # Creating the lending
+        db.insert('lendings',
+                  ['accountNumber', 'patrimonialNumber',
+                      'lendingDate', 'returnDate'],
+                  [lending['accountNumber'], lending['patrimonialNumber'],
+                      lending['lendingDate'], lending['returnDate']])
+    return redirect('/')
 
-    #Turning dates into correct format
+
+def generateReport(request):
+    initialDate = request.POST['initialDate']
+    endDate = request.POST['endDate']
+    career = request.POST['career']
+
+    # Turning dates into correct format
     initialDate = datetime.strptime(initialDate, '%b %d, %Y')
-    initialDate= initialDate.strftime('%Y-%m-%d')
+    initialDate = initialDate.strftime('%Y-%m-%d')
 
     endDate = datetime.strptime(endDate, '%b %d, %Y')
-    endDate= endDate.strftime('%Y-%m-%d')
+    endDate = endDate.strftime('%Y-%m-%d')
 
     print(initialDate)
-    
-    dataForReport= db.queryForReport(initialDate,endDate,career)
-    
-    pdf.printFile(dataForReport, initialDate,endDate, career)
-    #Now its time to return the file to the client
+
+    dataForReport = db.queryForReport(initialDate, endDate, career)
+
+    pdf.printFile(dataForReport, initialDate, endDate, career)
+    # Now its time to return the file to the client
     fs = FileSystemStorage()
     filename = 'Reporte_de_uso.pdf'
     if fs.exists(filename):
