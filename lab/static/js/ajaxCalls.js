@@ -68,6 +68,7 @@ function generateReport() {
     $.ajax(
         {
             url: 'generateReport',
+            method:'POST',
             data: {
                 'initialDate': initialRange,
                 'endDate': endRange,

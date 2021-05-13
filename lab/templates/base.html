@@ -214,7 +214,12 @@
           <br />
           <a
             href="xlsStudents"
-            class="btn-floating btn-large waves-effect waves-light green darken-4"
+            class="
+              btn-floating btn-large
+              waves-effect waves-light
+              green
+              darken-4
+            "
             ><i class="material-icons">download</i></a
           >
         </div>
@@ -224,7 +229,12 @@
           <br />
           <a
             href="xlsItems"
-            class="btn-floating btn-large waves-effect waves-light green darken-4"
+            class="
+              btn-floating btn-large
+              waves-effect waves-light
+              green
+              darken-4
+            "
             ><i class="material-icons">download</i></a
           >
         </div>
@@ -234,7 +244,12 @@
           <br />
           <a
             href="xlsLendings"
-            class="btn-floating btn-large waves-effect waves-light green darken-4"
+            class="
+              btn-floating btn-large
+              waves-effect waves-light
+              green
+              darken-4
+            "
             ><i class="material-icons">download</i></a
           >
         </div>
@@ -277,7 +292,12 @@
               </div>
               <a
                 onclick="this.closest('form').submit();return false;"
-                class="btn-floating btn-large waves-effect waves-light green darken-4"
+                class="
+                  btn-floating btn-large
+                  waves-effect waves-light
+                  green
+                  darken-4
+                "
                 ><i class="material-icons">send</i></a
               >
             </form>
@@ -309,7 +329,12 @@
 
               <a
                 onclick="this.closest('form').submit();return false;"
-                class="btn-floating btn-large waves-effect waves-light green darken-4"
+                class="
+                  btn-floating btn-large
+                  waves-effect waves-light
+                  green
+                  darken-4
+                "
                 ><i class="material-icons">send</i></a
               >
             </form>
@@ -335,7 +360,12 @@
               </div>
               <a
                 onclick="this.closest('form').submit();return false;"
-                class="btn-floating btn-large waves-effect waves-light green darken-4"
+                class="
+                  btn-floating btn-large
+                  waves-effect waves-light
+                  green
+                  darken-4
+                "
                 ><i class="material-icons">send</i></a
               >
             </form>
@@ -403,37 +433,54 @@
 
         <h6>Filtrar por carrera</h6>
 
-        <div class="input-field col s12">
-          <select id="careerSelect">
-            <option value="{{career}}" disabled selected>
-              Choose your option
-            </option>
-            <option value="all">
-              Todas las carreras
-            </option>
-            {% for career in careers %}
+        <form action="generateReport" method="POST">
+          {% csrf_token %}
+          <div class="input-field col s12">
+            <select id="careerSelect" name="career">
+              <option value="{{career}}" disabled selected>
+                Choose your option
+              </option>
+              <option value="all">Todas las carreras</option>
+              {% for career in careers %}
 
-            <option value={{career}}>{{career}}</option>
-            {% endfor %}
-            
-          </select>
-          <label>Materialize Select</label>
-        </div>
-        <br />
+              <option value="{{career}}">{{career}}</option>
+              {% endfor %}
+            </select>
+            <label>Materialize Select</label>
+          </div>
+          <br />
 
-        <div id="dateRangeReport">
-          <h6>Generar desde 📅</h6>
-          <h6>Hasta 📆</h6>
+          <div id="dateRangeReport">
+            <h6>Generar desde 📅</h6>
+            <h6>Hasta 📆</h6>
 
-          <input id="initialRange" placeholder="Fecha inicial" type="text" class="datepicker" />
+            <input
+              id="initialRange"
+              placeholder="Fecha inicial"
+              type="text"
+              name="initialDate"
+              class="datepicker"
+            />
 
-          <input id="endRange" placeholder="Fecha inicial" type="text" class="datepicker" />
-        </div>
-        <br>
+            <input
+              id="endRange"
+              name="endDate"
+              placeholder="Fecha inicial"
+              type="text"
+              class="datepicker"
+            />
+          </div>
+          <br />
 
-        <a onclick="generateReport()" class="waves-effect waves-light btn" id="generateReport"
-          ><i class="material-icons left">description</i>Generar reporte</a
-        >
+          <button type="submit" style="background:none;border:none;">
+            <a
+            class="waves-effect waves-light btn"
+            id="generateReport"
+            ><i class="material-icons left">description</i>Generar reporte</a
+          >
+          </button>
+          
+        </form>
       </div>
     </div>
   </div>

@@ -27,7 +27,7 @@ def printLogos(pdf):
     pdf.image("lab/static/img/logoLargo.png", 30, margin, (width - margin*3))
 
 
-def printHeaders(pdf):
+def printHeaders(pdf, initialDate,endDate,career):
     # Uaemex logo
     printLogos(pdf)
 
@@ -43,12 +43,15 @@ def printHeaders(pdf):
     pdf.ln(10)
     pdf.cell(margin)
 
-    description = """Este documento contiene el reporte de prestamos realizados por  el laboratorio de electronica de las carreras:__ dentro del periodo comprendido entre el 5/05/2021 al 16/08/2021"""
+    description = f"""Este documento contiene el reporte de prestamos realizados por  el laboratorio de electronica de la carrera de {career} dentro del periodo comprendido entre el {initialDate} al {endDate}."""
+    if career=='all':
+        description = f"""Este documento contiene el reporte de prestamos realizados por  el laboratorio de electronica dentro del periodo comprendido entre el {initialDate} al {endDate}."""
+
     pdf.multi_cell(w=width-margin*3, h=18, txt=description,
                    border=0, ln=0, align='J', max_line_height=6)
 
 
-def printFooter(pdf, totalData,key):
+def printFooter(pdf, totalData, key):
     # QR code for validation and footer
     pdf.image("lab/static/img/customLogo.png", width-100, height-37, 80)
     pdf.image("qr.png", margin, height-38, 30)
@@ -67,7 +70,7 @@ def printFooter(pdf, totalData,key):
     pdf.set_font(size=12, style="I")
 
 
-def printFile(data):
+def printFile(data,initialDate, endDate,career):
     key = generateQR()
 
     pdf = FPDF()
@@ -76,41 +79,48 @@ def printFile(data):
 
     pdf.set_font('Arial', size=12)
 
-    printHeaders(pdf)
+    printHeaders(pdf,initialDate,endDate,career)
 
-    data = [['F. de prestamo', 'F. de retorno', 'Prestado a', 'Item'],
-            ['Jules', 'Smith', 34, 'San Juan'],
-            ['Mary', 'Ramos', 45, 'Orlando'], [
-        'Carlson', 'Banks', 19, 'Los Angeles']
-    ]
-
-    data = data*100
-
-    printFooter(pdf, len(data),key)
+    headers = ['F. de prestamo', 'F. de retorno', 'Alumno', 'Equipo']
+    printFooter(pdf, len(data), key)
 
     # Creating tables
     pdf.ln(10)
-    col_width = width/5.5
+    col_width = width/5
 
     th = pdf.font_size
+
+    # Printing headers
+    pdf.set_font(size=12, style='B')
+    less=8
+    pdf.cell(margin-less)
+    for h in headers:
+        pdf.cell(col_width, 2*th, str(h), border=1)
+    pdf.cell(margin-less)
+    pdf.ln(2*th)
+
+    pdf.set_font(size=8)
 
     for i in range(len(data)):
         row = data[i]
         if(i % 18 == 0 and i != 0):
             pdf.add_page()
             printLogos(pdf)
-            printFooter(pdf, len(data),key)
-
+            printFooter(pdf, len(data), key)
             pdf.ln(50)
-        pdf.cell(margin)
+            pdf.set_font(size=12, style='B')
+            pdf.cell(margin-less)
+            for h in headers:
+                pdf.cell(col_width, 2*th, str(h), border=1)
+            pdf.cell(margin-less)
+            pdf.ln(2*th)
+        pdf.set_font(size=8)
+        pdf.cell(margin-less)
 
         for datum in row:
             pdf.cell(col_width, 2*th, str(datum), border=1)
-        pdf.cell(margin)
+        pdf.cell(margin-less)
         pdf.ln(2*th)
 
     # save the pdf with name .pdf
-    pdf.output("GFG.pdf")
-
-
-printFile([])
+    pdf.output(f'Reporte_de_uso.pdf')

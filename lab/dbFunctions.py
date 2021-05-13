@@ -192,9 +192,9 @@ def newItem(item):
 def queryForReport(initialDate, endDate, career):
     query = ""
     if(career != 'all'):
-        query = f'select lendingDate,returnDate,students.name,items.name from historiallendings join students on students.accountNumber join items on historiallendings.patrimonialNumber where lendingDate>"{initialDate}" and lendingDate<"{endDate}" and students.career="{career}"'
+        query = f'select lendingDate,returnDate,students.name,items.name from historiallendings join students on students.accountNumber join items on historiallendings.patrimonialNumber where lendingDate>"{initialDate}" and lendingDate<"{endDate}" and students.career="{career}" ORDER BY lendingDate'
     else:
-        query = f'select lendingDate,returnDate,students.name,items.name from historiallendings join students on students.accountNumber join items on historiallendings.patrimonialNumber where lendingDate>"{initialDate}" and lendingDate<"{endDate}"'
+        query = f'select lendingDate,returnDate,students.name,items.name from historiallendings join students on students.accountNumber join items on historiallendings.patrimonialNumber where lendingDate>"{initialDate}" and lendingDate<"{endDate}" ORDER BY lendingDate'
 
     connection = startConnection()
     cursor = connection.cursor()

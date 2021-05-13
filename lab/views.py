@@ -1,7 +1,10 @@
 from django.shortcuts import redirect, render
 from django.http.response import HttpResponse, JsonResponse
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse, HttpResponseNotFound
 from . import dbFunctions as db
 from . import xlsFunctions as xls
+from . import pdfFunctions as pdf
 import json
 import time
 
@@ -132,9 +135,9 @@ def importItems(request):
 
 
 def generateReport(request):
-    initialDate= request.GET['initialDate']
-    endDate= request.GET['endDate']
-    career= request.GET['career']
+    initialDate= request.POST['initialDate']
+    endDate= request.POST['endDate']
+    career= request.POST['career']
 
     #Turning dates into correct format
     initialDate = datetime.strptime(initialDate, '%b %d, %Y')
@@ -145,6 +148,17 @@ def generateReport(request):
 
     print(initialDate)
     
-    db.queryForReport(initialDate,endDate,career)
-
-    return JsonResponse({})
+    dataForReport= db.queryForReport(initialDate,endDate,career)
+    
+    pdf.printFile(dataForReport, initialDate,endDate, career)
+    #Now its time to return the file to the client
+    fs = FileSystemStorage()
+    filename = 'Reporte_de_uso.pdf'
+    if fs.exists(filename):
+        with fs.open(filename) as pdf2:
+            response = HttpResponse(pdf2, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="Reporte de uso.pdf"'
+            #response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'
+            return response
+    else:
+        return HttpResponseNotFound('The requested pdf was not found in our server.')
