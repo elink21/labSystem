@@ -190,17 +190,48 @@ def newItem(item):
 
 
 def queryForReport(initialDate, endDate, career):
-    query = ""
-    if(career != 'all'):
-        query = f'select lendingDate,returnDate,students.name,items.name from historiallendings join students on students.accountNumber join items on historiallendings.patrimonialNumber where lendingDate>"{initialDate}" and lendingDate<"{endDate}" and students.career="{career}" ORDER BY lendingDate'
-    else:
-        query = f'select lendingDate,returnDate,students.name,items.name from historiallendings join students on students.accountNumber join items on historiallendings.patrimonialNumber where lendingDate>"{initialDate}" and lendingDate<"{endDate}" ORDER BY lendingDate'
+    query = f'select * from historiallendings where lendingDate> "{initialDate}" and lendingDate< "{endDate}" order by lendingDate'
+    print(query)
 
     connection = startConnection()
     cursor = connection.cursor()
     cursor.execute(query)
     res = cursor.fetchall()
+
+    filteredQuery = []
+
+    # Not its time to do a little weird provisional join like operation
+    for i in range(len(res)):
+        accountNumber = res[i][3]
+        patrimonialNumber = res[i][4]
+
+        # Fetching extra information
+        cursor.execute(
+            f'select name from items where patrimonialNumber= {patrimonialNumber}')
+        item = cursor.fetchall()
+
+        res[i] = list(res[i])
+        if len(item):
+            res[i].append(item[0][0])
+        else:
+            res[i].append("GENERIC")
+
+        cursor.execute(
+            f'select name, career from students where accountNumber= {accountNumber}')
+        student = cursor.fetchall()
+
+        itemName = item[0][0] if len(item) else ""
+        careerName = student[0][1] if len(student) else ""
+        studentName = student[0][0] if len(student) else ""
+        newLine = [res[i][1], res[i][2], studentName, itemName]
+
+        if career == "all" or career == careerName:
+            filteredQuery.append(newLine)
+
+    for row in filteredQuery:
+        print(row)
+
     connection.close()
-    for row in res:
-        print(row[0])
-    return res
+
+    # Data filtering by career and info completion, first the data is filtered by the career
+    return filteredQuery

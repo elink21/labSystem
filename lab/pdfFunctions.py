@@ -1,3 +1,4 @@
+from pickle import FRAME
 from fpdf import FPDF
 import os
 import secrets as keys
@@ -27,7 +28,7 @@ def printLogos(pdf):
     pdf.image("lab/static/img/logoLargo.png", 30, margin, (width - margin*3))
 
 
-def printHeaders(pdf, initialDate,endDate,career):
+def printHeaders(pdf, initialDate, endDate, career, forPeriod):
     # Uaemex logo
     printLogos(pdf)
 
@@ -35,17 +36,22 @@ def printHeaders(pdf, initialDate,endDate,career):
 
     pdf.ln(45)
     pdf.cell(margin)
-    pdf.set_font(style="B", size=14)
+    pdf.set_font(family="Arial", style="B", size=14)
     pdf.cell(width-margin*3, 0, title, 0, 0, 'C')
 
-    pdf.set_font(size=12, style="I")
+    pdf.set_font(family="Arial", size=12, style="I")
 
     pdf.ln(10)
     pdf.cell(margin)
 
-    description = f"""Este documento contiene el reporte de prestamos realizados por  el laboratorio de electronica de la carrera de {career} dentro del periodo comprendido entre el {initialDate} al {endDate}."""
-    if career=='all':
-        description = f"""Este documento contiene el reporte de prestamos realizados por  el laboratorio de electronica dentro del periodo comprendido entre el {initialDate} al {endDate}."""
+    description = f"""Este documento contiene el reporte de prestamos realizados por  el laboratorio de electronica de la carrera de {career} """
+    if career == 'all':
+        description = f"""Este documento contiene el reporte de prestamos realizados por  el laboratorio de electronica """
+
+    if forPeriod != False:
+        description += f' correspondientes al periodo {forPeriod}'
+    else:
+        description += f' entre el {initialDate} y el {endDate}'
 
     pdf.multi_cell(w=width-margin*3, h=18, txt=description,
                    border=0, ln=0, align='J', max_line_height=6)
@@ -67,19 +73,19 @@ def printFooter(pdf, totalData, key):
 
     pdf.text(52, height-11, "Laboratorios de informatica")
 
-    pdf.set_font(size=12, style="I")
+    pdf.set_font(family="Arial", size=12, style="I")
 
 
-def printFile(data,initialDate, endDate,career):
+def printFile(data, initialDate, endDate, career, forPeriod):
     key = generateQR()
 
     pdf = FPDF()
 
     pdf.add_page()
 
-    pdf.set_font('Arial', size=12)
+    pdf.set_font(family='Arial', size=12)
 
-    printHeaders(pdf,initialDate,endDate,career)
+    printHeaders(pdf, initialDate, endDate, career, forPeriod)
 
     headers = ['F. de prestamo', 'F. de retorno', 'Alumno', 'Equipo']
     printFooter(pdf, len(data), key)
@@ -91,15 +97,15 @@ def printFile(data,initialDate, endDate,career):
     th = pdf.font_size
 
     # Printing headers
-    pdf.set_font(size=12, style='B')
-    less=8
+    pdf.set_font(family="Arial", size=12, style='B')
+    less = 8
     pdf.cell(margin-less)
     for h in headers:
         pdf.cell(col_width, 2*th, str(h), border=1)
     pdf.cell(margin-less)
     pdf.ln(2*th)
 
-    pdf.set_font(size=8)
+    pdf.set_font(family="Arial", size=8)
 
     for i in range(len(data)):
         row = data[i]
@@ -108,17 +114,22 @@ def printFile(data,initialDate, endDate,career):
             printLogos(pdf)
             printFooter(pdf, len(data), key)
             pdf.ln(50)
-            pdf.set_font(size=12, style='B')
+            pdf.set_font(family="Arial", size=12, style='B')
             pdf.cell(margin-less)
             for h in headers:
                 pdf.cell(col_width, 2*th, str(h), border=1)
             pdf.cell(margin-less)
             pdf.ln(2*th)
-        pdf.set_font(size=8)
+        pdf.set_font(family="Arial", size=8)
         pdf.cell(margin-less)
 
-        for datum in row:
-            pdf.cell(col_width, 2*th, str(datum), border=1)
+        for i in range(len(row)):
+            if i == 2:
+                pdf.set_font(family="Courier", size=5)
+            else:
+                pdf.set_font(family="Courier", size=8)
+            text2 = str(row[i]).encode('latin-1', 'replace').decode('latin-1')
+            pdf.cell(col_width, 2*th, text2, border=1)
         pdf.cell(margin-less)
         pdf.ln(2*th)
 

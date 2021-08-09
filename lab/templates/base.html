@@ -357,7 +357,11 @@
               <div class="file-field input-field">
                 <div class="btn btn-small lime darken-3">
                   <span><i class="material-icons">folder_open</i></span>
-                  <input name="lendingsXLS" type="file" accept=".xlsx, .xls, .csv" />
+                  <input
+                    name="lendingsXLS"
+                    type="file"
+                    accept=".xlsx, .xls, .csv"
+                  />
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text" />
@@ -442,9 +446,6 @@
           {% csrf_token %}
           <div class="input-field col s12">
             <select id="careerSelect" name="career">
-              <option value="{{career}}" disabled selected>
-                Choose your option
-              </option>
               <option value="all">Todas las carreras</option>
               {% for career in careers %}
 
@@ -456,7 +457,7 @@
           <br />
 
           <div id="dateRangeReport">
-            <h6>Generar desde 📅</h6>
+            <h6>Generar por fechas desde 📅</h6>
             <h6>Hasta 📆</h6>
 
             <input
@@ -477,14 +478,21 @@
           </div>
           <br />
 
-          <button type="submit" style="background:none;border:none;">
-            <a
-            class="waves-effect waves-light btn"
-            id="generateReport"
-            ><i class="material-icons left">description</i>Generar reporte</a
-          >
+          <h6>O generar por periodo 🏫</h6>
+          <br />
+
+          <select name="period" id="periodSelect">
+            {% for year in periodYears %}
+            <option value="{{year}}A">{{year}}A</option>
+            <option value="{{year}}B">{{year}}B</option>
+            {%endfor%}
+          </select>
+
+          <button type="submit" style="background: none; border: none">
+            <a class="waves-effect waves-light btn" id="generateReport"
+              ><i class="material-icons left">description</i>Generar reporte</a
+            >
           </button>
-          
         </form>
       </div>
     </div>
@@ -502,6 +510,10 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       var elems = document.querySelectorAll('.datepicker');
+      var date= new Date();
+      var datePickerOptions = {
+        'defaultDate': date
+    }
       var instances = M.Datepicker.init(elems, {});
     });
 

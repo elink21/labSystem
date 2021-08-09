@@ -86,6 +86,7 @@ def index(request):
     items = db.getItems()
     lendings = db.getLendings()
     historiallendings = db.getHistorialLendings()
+    firstLending, lastLending = historiallendings[0], historiallendings[-1]
 
     careers = []
     for s in students:
@@ -98,10 +99,19 @@ def index(request):
     lendings = json.dumps(lendings)
     historiallendings = json.dumps(historiallendings)
 
+    firstLending = int(firstLending["lendingDate"][0:4])
+    lastLending = int(lastLending["lendingDate"][0:4])
+
+    periodYears = []
+
+    for i in range(firstLending, lastLending+1):
+        periodYears.append(i)
+
     return render(request, 'base.html',
                   {'students': students, 'items': items,
                    'lendings': lendings, 'historialLendings': historiallendings,
-                   'careers': careerSet})
+                   'careers': careerSet,
+                   'periodYears': periodYears})
 
 
 def importStudents(request):
@@ -161,19 +171,31 @@ def generateReport(request):
     initialDate = request.POST['initialDate']
     endDate = request.POST['endDate']
     career = request.POST['career']
+    period = request.POST['period']
+    periodYear = int(period[0:4])
+    forPeriod = False
+
+    print(period)
 
     # Turning dates into correct format
-    initialDate = datetime.strptime(initialDate, '%b %d, %Y')
-    initialDate = initialDate.strftime('%Y-%m-%d')
+    if initialDate != "" and endDate != "":
+        initialDate = datetime.strptime(initialDate, '%b %d, %Y')
+        initialDate = initialDate.strftime('%Y-%m-%d')
 
-    endDate = datetime.strptime(endDate, '%b %d, %Y')
-    endDate = endDate.strftime('%Y-%m-%d')
-
-    print(initialDate)
+        endDate = datetime.strptime(endDate, '%b %d, %Y')
+        endDate = endDate.strftime('%Y-%m-%d')
+    else:
+        forPeriod = period
+        if period[-1] == "A":
+            initialDate = f'{periodYear}-02-01'
+            endDate = f'{periodYear}-07-31'
+        else:
+            initialDate = f'{periodYear}-08-01'
+            endDate = f'{periodYear+1}-01-31'
 
     dataForReport = db.queryForReport(initialDate, endDate, career)
 
-    pdf.printFile(dataForReport, initialDate, endDate, career)
+    pdf.printFile(dataForReport, initialDate, endDate, career, forPeriod)
     # Now its time to return the file to the client
     fs = FileSystemStorage()
     filename = 'Reporte_de_uso.pdf'
